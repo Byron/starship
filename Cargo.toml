@@ -48,10 +48,8 @@ clap_complete = "4.5.40"
 dirs = "5.0.1"
 dunce = "1.0.5"
 # default feature restriction addresses https://github.com/starship/starship/issues/4251
-gix = { version = "0.69.1", git = "https://github.com/GitoxideLabs/gitoxide", branch = "status", default-features = false, features = ["max-performance-safe", "revision"] }
+gix = { version = "0.69.1", git = "https://github.com/GitoxideLabs/gitoxide", branch = "status", default-features = false, features = ["max-performance-safe", "revision", "status"] }
 gix-features = { version = "0.39.1", optional = true }
-# for efficient shared state between `git_status` and `git_metrics`, allowing parallel printing. This is for poison-free locks.
-parking_lot = "0.12.3"
 indexmap = { version = "2.7.0", features = ["serde"] }
 log = { version = "0.4.22", features = ["std"] }
 # notify-rust is optional (on by default) because the crate doesn't currently build for darwin with nix
@@ -61,6 +59,8 @@ nu-ansi-term = "0.50.1"
 open = "5.3.2"
 # update os module config and tests when upgrading os_info
 os_info = "3.9.2"
+# for efficient shared state between `git_status` and `git_metrics`, allowing parallel printing. This is for poison-free locks.
+parking_lot = "0.12.3"
 path-slash = "0.2.1"
 pest = "2.7.15"
 pest_derive = "2.7.15"
