@@ -249,7 +249,8 @@ fn get_repo_status(
     // TODO: remove this special case once `gitoxide` can handle sparse indices for tree-index comparisons.
     let has_untracked = !config.untracked.is_empty();
     let git_config = gix_repo.config_snapshot();
-    if gix_repo.index_or_empty().ok()?.is_sparse()
+    if config.use_git_executable
+        || gix_repo.index_or_empty().ok()?.is_sparse()
         || (git_config.string("core.fsmonitor").is_some() // can be path to monitor executable
             && git_config                                 // or can be boolean which should be true
                 .boolean("core.fsmonitor")                // and any boolean is a valid string, and we get None if a path is used.
