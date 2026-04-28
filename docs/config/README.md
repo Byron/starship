@@ -2064,6 +2064,56 @@ added_style = 'bold blue'
 format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
 ```
 
+## Git Repo Color
+
+The `git_repo_color` module shows a colored symbol for the current Git repository,
+based on the repository root directory name. It is useful when you want a small
+visual cue before the `directory` module.
+
+> [!TIP]
+> This module is not included in the default prompt order.
+> Add `$git_repo_color` to `format` to display it.
+
+### Options
+
+| Option            | Default                                                                    | Description                                                                 |
+| ----------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `format`          | `'[$symbol]($style) '`                                                     | The format for the module.                                                  |
+| `symbol`          | `'■'`                                                                      | A format string representing the repository color indicator.                 |
+| `styles`          | `{}`                                                                       | A table of repository root directory names to styles.                        |
+| `fallback_styles` | `['bold red', 'bold yellow', 'bold green', 'bold cyan', 'bold blue', 'bold purple']` | Styles used when a repository does not have an explicit style. |
+| `disabled`        | `false`                                                                    | Disables the `git_repo_color` module.                                        |
+
+### Variables
+
+| Variable | Description                         |
+| -------- | ----------------------------------- |
+| symbol   | Mirrors the value of option `symbol` |
+| style\*  | The style chosen for the current Git repository |
+
+*: This variable can only be used as a part of a style string
+
+### Example
+
+```toml
+# ~/.config/starship.toml
+
+format = "$git_repo_color$directory$git_branch$git_status$character"
+
+[git_repo_color.styles]
+starship = "bold cyan"
+work-repo = "bold yellow"
+```
+
+Customize the fallback palette:
+
+```toml
+# ~/.config/starship.toml
+
+[git_repo_color]
+fallback_styles = ["bold green", "bold blue", "bold purple"]
+```
+
 ## Git Status
 
 The `git_status` module shows symbols representing the state of the repo in your
