@@ -13,6 +13,7 @@ pub struct GitRepoColorConfig<'a> {
     pub symbol: &'a str,
     pub styles: IndexMap<String, &'a str>,
     pub fallback_styles: Vec<&'a str>,
+    pub adapt_background: bool,
     pub disabled: bool,
 }
 
@@ -29,7 +30,14 @@ impl Default for GitRepoColorConfig<'_> {
                 "bold cyan",
                 "bold blue",
                 "bold purple",
+                "bold bright-red",
+                "bold bright-yellow",
+                "bold bright-green",
+                "bold bright-cyan",
+                "bold bright-blue",
+                "bold bright-purple",
             ],
+            adapt_background: true,
             disabled: false,
         }
     }

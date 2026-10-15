@@ -2083,7 +2083,8 @@ visual cue before the `directory` module.
 | `format`          | `'[$symbol]($style) '`                                                     | The format for the module.                                                  |
 | `symbol`          | `'■'`                                                                      | A format string representing the repository color indicator.                 |
 | `styles`          | `{}`                                                                       | A table of repository root directory names to styles.                        |
-| `fallback_styles` | `['bold red', 'bold yellow', 'bold green', 'bold cyan', 'bold blue', 'bold purple']` | Styles used when a repository does not have an explicit style. |
+| `fallback_styles` | `['bold red', 'bold yellow', 'bold green', 'bold cyan', 'bold blue', 'bold purple', 'bold bright-red', 'bold bright-yellow', 'bold bright-green', 'bold bright-cyan', 'bold bright-blue', 'bold bright-purple']` | Styles used when a repository does not have an explicit style. |
+| `adapt_background` | `true` | Adapt ANSI background colors to the terminal's background and palette. Explicit RGB colors remain fixed. |
 | `disabled`        | `false`                                                                    | Disables the `git_repo_color` module.                                        |
 
 ### Variables
@@ -2115,6 +2116,39 @@ Customize the fallback palette:
 [git_repo_color]
 fallback_styles = ["bold green", "bold blue", "bold purple"]
 ```
+
+To render a background block (including from `starship module git_repo_color`):
+
+```toml
+[git_repo_color]
+symbol = " "
+format = "[$symbol]($style)"
+fallback_styles = [
+  "bg:red", "bg:yellow", "bg:green", "bg:cyan", "bg:blue", "bg:purple",
+  "bg:bright-red", "bg:bright-yellow", "bg:bright-green", "bg:bright-cyan", "bg:bright-blue", "bg:bright-purple",
+]
+```
+
+Background adaptation blends the actual terminal background with the selected
+palette color. If no foreground is specified, it uses the terminal foreground
+when its contrast is sufficient, otherwise black or white. Explicit foregrounds
+and RGB backgrounds (including colors from a configured Starship palette) are
+preserved. Set `adapt_background = false` to use the styles exactly as configured.
+
+On Linux, macOS, and FreeBSD, Starship detects Kitty-compatible terminals
+(including Ghostty/Rustty) and prefers Kitty OSC 21, falling back to OSC 10/11/4.
+Queries go directly to the
+controlling terminal, leaving standard output available for scripts, and have a
+100 ms timeout. Colors are shared within a render and queried again on the next
+render to follow theme changes. Typed input is returned to the terminal without
+flushing it. When input replay is unavailable, input is already pending, or the
+terminal does not respond, the configured ANSI styles remain in use. Other
+platforms and terminal multiplexers currently use this ANSI fallback. Replies
+that arrive after the timeout can reach the shell; disable adaptation if your
+terminal exhibits this behavior.
+
+The twelve-color default may assign a different color than the old six-color
+default. Set `fallback_styles` explicitly to keep an existing repository mapping.
 
 ## Git Status
 

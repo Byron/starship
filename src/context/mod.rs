@@ -67,6 +67,8 @@ pub struct Context<'a> {
     /// Private field to store JJ information for modules who need it
     jj_repo: OnceLock<Option<JJRepo>>,
 
+    terminal_colors: OnceLock<Option<utils::terminal::TerminalColors>>,
+
     /// The shell the user is assumed to be running
     pub shell: Shell,
 
@@ -187,6 +189,7 @@ impl<'a> Context<'a> {
             dir_contents: OnceLock::new(),
             git_repo: OnceLock::new(),
             jj_repo: OnceLock::new(),
+            terminal_colors: OnceLock::new(),
             shell,
             target,
             width,
@@ -233,6 +236,12 @@ impl<'a> Context<'a> {
     #[inline]
     pub fn get_env_os<K: AsRef<str>>(&self, key: K) -> Option<OsString> {
         self.env.get_env_os(key)
+    }
+
+    pub(crate) fn terminal_colors(&self) -> Option<&utils::terminal::TerminalColors> {
+        self.terminal_colors
+            .get_or_init(|| utils::terminal::query(&self.env))
+            .as_ref()
     }
 
     /// Convert a `~` in a path to the home directory

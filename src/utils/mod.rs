@@ -1,6 +1,7 @@
 pub mod env;
 pub mod serde;
 pub mod statusline;
+pub(crate) mod terminal;
 
 use process_control::{ChildExt, Control};
 use std::ffi::OsStr;

@@ -722,6 +722,30 @@
         "ignore_submodules": false
       }
     },
+    "git_repo_color": {
+      "$ref": "#/$defs/GitRepoColorConfig",
+      "default": {
+        "format": "[$symbol]($style) ",
+        "symbol": "■",
+        "styles": {},
+        "fallback_styles": [
+          "bold red",
+          "bold yellow",
+          "bold green",
+          "bold cyan",
+          "bold blue",
+          "bold purple",
+          "bold bright-red",
+          "bold bright-yellow",
+          "bold bright-green",
+          "bold bright-cyan",
+          "bold bright-blue",
+          "bold bright-purple"
+        ],
+        "adapt_background": true,
+        "disabled": false
+      }
+    },
     "git_state": {
       "$ref": "#/$defs/GitStateConfig",
       "default": {
@@ -3814,6 +3838,55 @@
           "default": true
         },
         "ignore_submodules": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "GitRepoColorConfig": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "default": "[$symbol]($style) "
+        },
+        "symbol": {
+          "type": "string",
+          "default": "■"
+        },
+        "styles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {}
+        },
+        "fallback_styles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "bold red",
+            "bold yellow",
+            "bold green",
+            "bold cyan",
+            "bold blue",
+            "bold purple",
+            "bold bright-red",
+            "bold bright-yellow",
+            "bold bright-green",
+            "bold bright-cyan",
+            "bold bright-blue",
+            "bold bright-purple"
+          ]
+        },
+        "adapt_background": {
+          "type": "boolean",
+          "default": true
+        },
+        "disabled": {
           "type": "boolean",
           "default": false
         }
