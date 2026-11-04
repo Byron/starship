@@ -2129,8 +2129,8 @@ fallback_styles = [
 ]
 ```
 
-Background adaptation blends the actual terminal background with the selected
-palette color. If no foreground is specified, it uses the terminal foreground
+Background adaptation mixes 10% of the selected palette color into the actual
+terminal background. If no foreground is specified, it uses the terminal foreground
 when its contrast is sufficient, otherwise black or white. Explicit foregrounds
 and RGB backgrounds (including colors from a configured Starship palette) are
 preserved. Set `adapt_background = false` to use the styles exactly as configured.

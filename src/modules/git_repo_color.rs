@@ -161,11 +161,11 @@ mod tests {
         colors.palette[1] = Some(Rgb(200, 100, 0));
         assert_eq!(
             background_style("bold bg:red", 1, &colors, false),
-            "bold bg:red bg:#462300 fg:#ffffff"
+            "bold bg:red bg:#140a00 fg:#ffffff"
         );
         assert_eq!(
             background_style("fg:my_palette_color bg:red", 1, &colors, true),
-            "fg:my_palette_color bg:red bg:#462300"
+            "fg:my_palette_color bg:red bg:#140a00"
         );
         assert_eq!(background_style("bg:green", 2, &colors, false), "bg:green");
         assert_eq!(palette_index(Color::Rgb(1, 2, 3)), None);

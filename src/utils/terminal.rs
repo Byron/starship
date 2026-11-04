@@ -73,7 +73,7 @@ impl TerminalColors {
         let background = self.background?;
         let accent = self.palette.get(index).copied().flatten()?;
         // Keep the palette hue, tinting a light theme and shading a dark one.
-        Some(background.blend(accent, 0.35))
+        Some(background.blend(accent, 0.10))
     }
 
     pub(crate) fn text_color(&self, background: Rgb) -> Rgb {
@@ -496,6 +496,21 @@ mod tests {
             assert_ne!(derived, colors.palette[1].unwrap());
             assert!(colors.text_color(derived).contrast(derived) >= 4.5);
             assert_eq!(colors.background_color(2), None);
+        }
+    }
+
+    #[test]
+    fn repository_tints_stay_close_to_dark_and_light_theme_backgrounds() {
+        for (background, accent, expected) in [
+            (Rgb(9, 3, 0), Rgb(214, 213, 212), Rgb(30, 24, 21)),
+            (Rgb(247, 247, 247), Rgb(188, 187, 186), Rgb(241, 241, 241)),
+        ] {
+            let mut colors = TerminalColors {
+                background: Some(background),
+                ..Default::default()
+            };
+            colors.palette[13] = Some(accent);
+            assert_eq!(colors.background_color(13), Some(expected));
         }
     }
 
